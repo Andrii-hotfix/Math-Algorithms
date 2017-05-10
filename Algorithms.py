@@ -51,10 +51,14 @@ def linear_congr(a, b, mod):
 			
 #checks if given number is prime			
 def is_prime(n):
-   d = 2
-   while n % d != 0:
-       d += 1
-   return d == n
+	if n == 1:
+		warn = "1  is not a prime number"
+		return warn
+	else:
+		d = 2
+		while n % d != 0:
+			d += 1
+		return d == n
    
 #factorization of given number   
 def factorize(n):

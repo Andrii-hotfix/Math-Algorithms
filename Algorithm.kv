@@ -3,26 +3,133 @@
 ScreenManagement:
 	transition: FadeTransition()
 	MainMenu:
+	PrimeChecker:
+	Factorization:
 	EulerFunction:
+
+<Button>:
+	size_hint_y: None
+	height: 40
+	font_size:0.35*self.height
+	background_color:(105,105,105,0.4)
+	color: (0,0,0,1)
 	
 <MainMenu>:
 	name: "main"
-	#Button:
-		#on_release: app.root.current = "euler_function"
-		#text: "Euler Function"
-		#size_hint: 0.3, 0.2
-		#font_size: 0.3*self.height
+	
+	FloatLayout:
+		canvas.before:
+			Rectangle:
+				size: self.size
+				pos: self.pos
+				source: 'kai_greene.jpg'
+		ScrollView:
+			size_hint: None, None
+			size: root.width, root.height
+			pos_hint: {"right":1.35, "top":1}			
+			GridLayout:
+				cols:1
+				spacing: 10
+				height: self.minimum_height
+				size_hint: 0.3, None
+				
+				Button:
+					text: "Prime checker"
+					on_release: app.root.current = "prime_checker"
+				Button:
+					text: "Factorization"
+					on_release: app.root.current = "factorization"
+				Button:
+					text: "Euler function"
+					on_release: app.root.current = "euler_function"
+				Button:
+					text: "Mebuis function"
+					#on_release: app.root.current = ""
+				Button:
+					text: "Generator checker"
+					#on_release: app.root.current = ""
+				Button:
+					text: "Search generator"
+					#on_release: app.root.current = ""
+				Button:
+					text: "Modular inversion"
+					#on_release: app.root.current = ""
+				Button:
+					text: "Linear congruence"
+					#on_release: app.root.current = ""
+				Button:
+					text: "System of linear congruencies"
+					#on_release: app.root.current = ""
+				Button:
+					text: "Legendre symbol"
+					#on_release: app.root.current = ""
+				Button:
+					text: "Tonelli-Shanks method"
+					#on_release: app.root.current = ""
+				Button:
+					text: "Sum of two points of elliptic curve"
+					#on_release: app.root.current = ""
+				Button:
+					text: "Point order"
+					#on_release: app.root.current = ""
+				Button:
+					text: "Shift register"
+					#on_release: app.root.current = ""
+				Button:
+					text: "Silver-Pohlig-Hellman algorithm"
+					#on_release: app.root.current = ""
 		
+
+<PrimeChecker>:
+	name: "prime_checker"
+	canvas.before:
+		Color:
+			rgba: 0,0,1,0.2
+		Rectangle:
+			size: self.size
+			pos: self.pos
+			
+	Button:
+		text: "Back"
+		size_hint: 0.2, 0.1
+		pos_hint: {"right":0.9, "top":0.15}
+		on_release: app.root.current = "main"
+		
+<Factorization>:
+	name:"factorization"
+	canvas.before:
+		Color:
+			rgba: 0,0,1,0.2
+		Rectangle:
+			size: self.size
+			pos: self.pos
+			
+	Button:
+		text: "Back"
+		size_hint: 0.2, 0.1
+		pos_hint: {"right":0.9, "top":0.15}
+		on_release: app.root.current = "main"
 		
 <EulerFunction>:
 	name: "euler_function"
-	#TextInput:
-		#text: "Input a number:"
-		#multiline: False
-		#size_hint: 0.3, 0.2
-	#Button:
-		#on_release: app.root.current = "euler_function_res"
-		#text: "Input"
-		#size_hint: 0.3, 0.2
-		#pos_hint: {"right":1, "top":1}
+	canvas.before:
+		Color:
+			rgba: 0,0,1,0.2
+		Rectangle:
+			size: self.size
+			pos: self.pos
+			
+	Button:
+		text: "Back"
+		size_hint: 0.2, 0.1
+		pos_hint: {"right":0.9, "top":0.15}
+		on_release: app.root.current = "main"
+		
+		
+		
+		
+		
+		
+		
+		
 		
