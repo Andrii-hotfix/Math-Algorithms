@@ -330,7 +330,7 @@ def morr_br(n):
 			for item in comb:
 				curr_fact_base[item] = fact[item]
 			# print(comb)
-			# print(curr_fact_base)
+			# print(curr_fact_base)на 20 кроці 
 			primes = curr_fact_base[comb[0]]
 			# print(primes)
 			for key, value in curr_fact_base.items():
@@ -352,6 +352,9 @@ def morr_br(n):
 			if res_fact_base != {}:
 				print(res_fact_base)
 				print(comb)
+				print(a)
+				print(p)
+				print(p2)
 				t = 1
 				for key in curr_fact_base.keys():
 					t *= p[p2.index(key)]
@@ -372,9 +375,6 @@ def morr_br(n):
 				primes = []
 		if res != None:
 			break
-
-
-
 
 
 morr_br(17873)
