@@ -284,97 +284,94 @@ def is_generator(num, mod):
 
 # Morrison-Brilhard factorization of n
 def morr_br(n):
-	# filling a column № -1
-	i = [x for x in range(-1, 20)]
+	# filling column [-1]
 	a = [None]
 	p = [1]
 	p2 = [1]
-	# filling a column № 0
+	# filling column [0]
 	v = 1
 	a.append(floor(sqrt(n)))
 	u = a[-1]
 	p.append(a[-1])
 	p2.append((p[-1] ** 2) % n)
-	# filling remaining columns
-	for i in range(20):
+	# creates factor base table
+	flag = True
+	iterat = 0
+	while flag:
+		iterat += 1
+		# filling remaining columns
 		v = (n - (u ** 2)) / v
 		a.append(floor((sqrt(n) + u) / v))
 		u = a[-1] * v - u
 		p.append((a[-1] * p[-1] + p[-2]) % n)
 		p2.append((p[-1] ** 2) % n)
-	i = 0
-	for item in p2:
-		if p2[i] > floor(n / 2):
-			p2[i] = p2[i] - n
-		i += 1
-	# print(a)
-	# print(p)
-	# print(p2)
-	# factor base
-	f_base = [item for item in p2[1:]]
-	fact = {}
-	for item in f_base:
-		fact[item] = factorize(abs(item))
-		if item < 0:
-			fact[item].append(-1)
-	print(fact)
-	for key, value in fact.items():
-		fact[key] = Counter(value)
-	# print(fact)
-	for i in range(2, len(fact) + 1):
-		curr_fact_base = {}
-		combinations = itertools.combinations(f_base, i)
-		flag = True
-		res = None
-		for comb in combinations:
-			for item in comb:
-				curr_fact_base[item] = fact[item]
-			# print(comb)
-			# print(curr_fact_base)на 20 кроці 
-			primes = curr_fact_base[comb[0]]
-			# print(primes)
-			for key, value in curr_fact_base.items():
-				for item in value:
-					if not item in primes:
-						primes[item] = 0
-			for key, value in curr_fact_base.items():
+		# using Absolutely-least residues
+		for item in p2:
+			if item > floor(n / 2):
+				p2[p2.index(item)] -= n
+		# fact - prime: factorization
+		fact = {}
+		for item in p2[1:]:
+			tmp = factorize(abs(item))
+			if item < 0:
+				tmp.append(-1)
+			fact[item] = Counter(tmp)
+		# defines the length of combination
+		for i in range(2, len(fact) + 1):
+			combinations = itertools.combinations(p2[1:], i)
+			res = None
+			for comb in combinations:
+				# currently used members of factorization base
+				curr_fact = {key: fact[key] for key in comb}
+				# all primes of factoriztion base
+				primes = curr_fact[comb[0]]
+				# every member has the same fact base curr_fact
+				for key, value in curr_fact.items():
+					for item in value:
+						if not item in primes:
+							primes[item] = 0
+				for key, value in curr_fact.items():
+					for item in primes:
+						if not item in value:
+							value[item] = 0
+				# res_fact is the summ of curr_fact
+				res_fact = {}
 				for item in primes:
-					if not item in value:
-						value[item] = 0
-			res_fact_base = {}
-			for item in primes:
-				res_fact_base[item] = 0
-				for key, value in curr_fact_base.items():
-					res_fact_base[item] += value[item]
-				if res_fact_base[item] % 2 != 0:
-					res_fact_base = {}
-					break
-			if res_fact_base != {}:
-				print(res_fact_base)
-				print(comb)
-				print(a)
-				print(p)
-				print(p2)
-				t = 1
-				for key in curr_fact_base.keys():
-					t *= p[p2.index(key)]
-				t = t % n
-				print(t)
-				s = 1
-				for key, value in res_fact_base.items():
-					s *= key ** int(value / 2)
-				s = s % n
-				print(s)
-				res = gcd(abs(t - s), n)
-				print(res)
-				if res == 1:
-					continue
-				break
-			else:
-				curr_fact_base = {}
-				primes = []
-		if res != None:
-			break
+					res_fact[item] = 0
+					for key, value in curr_fact.items():
+						res_fact[item] += value[item]
+					if res_fact[item] % 2 != 0 and res_fact[item] > 0:
+						res_fact = {}
+						break
+				if res_fact != {}:
+					t = 1
+					for key in curr_fact.keys():
+						t *= p[p2.index(key)]
+					t = t % n
+					s = 1
+					for key, value in res_fact.items():
+						s *= key ** (value // 2)
+					s = s % n
+					res = gcd(abs(t - s), n)
+					if res == 1 or res == 0:
+						continue
+					else:
+						# cleaning 0-values
+						res_fact = {key: value for key, value in res_fact.items() if value != 0}
+						# returns combination of p (not p^2)
+						res_comb = [p[p2.index(item)] for item in comb]
+						print("iterations:", iterat)
+						print("a:", a)
+						print("p:", p)
+						print("p2:", p2)
+						print("res_fact:", res_fact)
+						print("combination:", res_comb)
+						print("curr_fact", curr_fact)
+						print("t:", t)
+						print("s:", s)
+						print("res:", res)
+						flag = False
+						return res
 
 
 morr_br(17873)
