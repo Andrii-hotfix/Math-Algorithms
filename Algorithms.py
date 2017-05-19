@@ -327,57 +327,58 @@ def morr_br(n):
 			combinations = itertools.combinations(p2[1:], i)
 			res = None
 			for comb in combinations:
-				# currently used members of factorization base
-				curr_fact = {key: fact[key] for key in comb}
-				# all primes of factoriztion base
-				primes = curr_fact[comb[0]]
-				# every member has the same fact base curr_fact
-				for key, value in curr_fact.items():
-					for item in value:
-						if not item in primes:
-							primes[item] = 0
-				for key, value in curr_fact.items():
-					for item in primes:
-						if not item in value:
-							value[item] = 0
-				# res_fact is the summ of curr_fact
-				res_fact = {}
-				for item in primes:
-					res_fact[item] = 0
+				if p2[-1] in combinations:
+					# currently used members of factorization base
+					curr_fact = {key: fact[key] for key in comb}
+					# all primes of factoriztion base
+					primes = curr_fact[comb[0]]
+					# every member has the same fact base curr_fact
 					for key, value in curr_fact.items():
-						res_fact[item] += value[item]
-					if res_fact[item] % 2 != 0 and res_fact[item] > 0:
-						res_fact = {}
-						break
-				if res_fact != {}:
-					t = 1
-					for key in curr_fact.keys():
-						t *= p[p2.index(key)]
-					t = t % n
-					s = 1
-					for key, value in res_fact.items():
-						s *= key ** (value // 2)
-					s = s % n
-					res = gcd(abs(t - s), n)
-					if res == 1 or res % n == 0:
-						continue
-					else:
-						# cleaning 0-values
-						res_fact = {key: value for key, value in res_fact.items() if value != 0}
-						# returns combination of p (not p^2)
-						res_comb = [p[p2.index(item)] for item in comb]
-						print("iterations:", iterat)
-						print("a:", a)
-						print("p:", p)
-						print("p2:", p2)
-						print("res_fact:", res_fact)
-						print("combination:", res_comb)
-						print("curr_fact", curr_fact)
-						print("t:", t)
-						print("s:", s)
-						print("res:", res)
-						flag = False
-						return res
+						for item in value:
+							if not item in primes:
+								primes[item] = 0
+					for key, value in curr_fact.items():
+						for item in primes:
+							if not item in value:
+								value[item] = 0
+					# res_fact is the summ of curr_fact
+					res_fact = {}
+					for item in primes:
+						res_fact[item] = 0
+						for key, value in curr_fact.items():
+							res_fact[item] += value[item]
+						if res_fact[item] % 2 != 0 and res_fact[item] > 0:
+							res_fact = {}
+							break
+					if res_fact != {}:
+						t = 1
+						for key in curr_fact.keys():
+							t *= p[p2.index(key)]
+						t = t % n
+						s = 1
+						for key, value in res_fact.items():
+							s *= key ** (value // 2)
+						s = s % n
+						res = gcd(abs(t - s), n)
+						if res == 1 or res % n == 0:
+							continue
+						else:
+							# cleaning 0-values
+							res_fact = {key: value for key, value in res_fact.items() if value != 0}
+							# returns combination of p (not p^2)
+							res_comb = [p[p2.index(item)] for item in comb]
+							print("iterations:", iterat)
+							print("a:", a)
+							print("p:", p)
+							print("p2:", p2)
+							print("res_fact:", res_fact)
+							print("combination:", res_comb)
+							print("curr_fact", curr_fact)
+							print("t:", t)
+							print("s:", s)
+							print("res:", res)
+							flag = False
+							return res
 
 # 63967
-morr_br(1361)
+morr_br(42191)
