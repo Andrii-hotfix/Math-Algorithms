@@ -304,6 +304,8 @@ def morr_br(n):
 	flag = True
 	iterat = 0
 	while flag:
+		# if iterat > 8:
+			# break
 		iterat += 1
 		# filling remaining columns
 		v = (n - (u ** 2)) / v
@@ -327,7 +329,7 @@ def morr_br(n):
 			combinations = itertools.combinations(p2[1:], i)
 			res = None
 			for comb in combinations:
-				if p2[-1] not in comb:
+				if p2[-1] in comb:
 					# currently used members of factorization base
 					curr_fact = {key: fact[key] for key in comb}
 					# all primes of factoriztion base
@@ -351,6 +353,7 @@ def morr_br(n):
 							res_fact = {}
 							break
 					if res_fact != {}:
+						print(comb)
 						t = 1
 						for key in curr_fact.keys():
 							t *= p[p2.index(key)]
@@ -361,25 +364,31 @@ def morr_br(n):
 						s = s % n
 						res = gcd(abs(t - s), n)
 						if res == 1 or res % n == 0:
+							# res = gcd(((t + s) % n), n)
+							# if res == 1 or res % n == 0:
+							res_fact = {}
+							curr_fact = {}
+							primes = []
 							continue
-						else:
-							# cleaning 0-values
-							res_fact = {key: value for key, value in res_fact.items() if value != 0}
-							# returns combination of p (not p^2)
-							res_comb = [p[p2.index(item)] for item in comb]
-							print("iterations:", iterat)
-							print("a:", a)
-							print("p:", p)
-							print("p2:", p2)
-							print("res_fact:", res_fact)
-							print("combination:", res_comb)
-							print("curr_fact", curr_fact)
-							print("t:", t)
-							print("s:", s)
-							print("res:", res)
-							flag = False
-							return res
-
+						# cleaning 0-values
+						res_fact = {key: value for key, value in res_fact.items() if value != 0}
+						# returns combination of p (not p^2)
+						res_comb = [p[p2.index(item)] for item in comb]
+						print("iterations:", iterat)
+						print("a:", a)
+						print("p:", p)
+						print("p2:", p2)
+						print("res_fact:", res_fact)
+						print("combination:", res_comb)
+						print("curr_fact", curr_fact)
+						print("t:", t)
+						print("s:", s)
+						print("res:", res)
+						flag = False
+						return res
+					res_fact = {}
+					curr_fact = {}
+					primes = []
+				combinations = []
 # 63967
-# 5359
-morr_br(17873)
+morr_br(9353)
