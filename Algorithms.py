@@ -327,7 +327,7 @@ def morr_br(n):
 			combinations = itertools.combinations(p2[1:], i)
 			res = None
 			for comb in combinations:
-				if p2[-1] in combinations:
+				if p2[-1] not in comb:
 					# currently used members of factorization base
 					curr_fact = {key: fact[key] for key in comb}
 					# all primes of factoriztion base
@@ -381,4 +381,5 @@ def morr_br(n):
 							return res
 
 # 63967
-morr_br(42191)
+# 5359
+morr_br(17873)
