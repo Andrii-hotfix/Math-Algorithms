@@ -284,6 +284,12 @@ def is_generator(num, mod):
 
 # Morrison-Brilhard factorization of n
 def morr_br(n):
+	if n < 1:
+		print("error: input number less then 1")
+		return None
+	if is_prime(n):
+		print("error: input number is prime")
+		return None
 	# filling column [-1]
 	a = [None]
 	p = [1]
@@ -353,7 +359,7 @@ def morr_br(n):
 						s *= key ** (value // 2)
 					s = s % n
 					res = gcd(abs(t - s), n)
-					if res == 1 or res == 0:
+					if res == 1 or res % n == 0:
 						continue
 					else:
 						# cleaning 0-values
@@ -373,5 +379,5 @@ def morr_br(n):
 						flag = False
 						return res
 
-
-morr_br(17873)
+# 63967
+morr_br(1361)
