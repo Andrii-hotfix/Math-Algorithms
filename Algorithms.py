@@ -290,6 +290,9 @@ def morr_br(n):
 	if is_prime(n):
 		print("error: input number is prime")
 		return None
+	if sqrt(n).is_integer():
+		print(n, "is square of", int(sqrt(n)))
+		return int(sqrt(n))
 	# filling column [-1]
 	a = [None]
 	p = [1]
@@ -353,7 +356,6 @@ def morr_br(n):
 							res_fact = {}
 							break
 					if res_fact != {}:
-						print(comb)
 						t = 1
 						for key in curr_fact.keys():
 							t *= p[p2.index(key)]
@@ -364,8 +366,6 @@ def morr_br(n):
 						s = s % n
 						res = gcd(abs(t - s), n)
 						if res == 1 or res % n == 0:
-							# res = gcd(((t + s) % n), n)
-							# if res == 1 or res % n == 0:
 							res_fact = {}
 							curr_fact = {}
 							primes = []
@@ -391,4 +391,35 @@ def morr_br(n):
 					primes = []
 				combinations = []
 # 63967
-morr_br(9353)
+# 6
+# 27
+
+# Ferma factoriztion of n
+def ferma(n):
+	x = floor(sqrt(n))
+	print("x: ", x)
+	if x ** 2 == n:
+		print(n, "is square of", x)
+		return x
+	i = 0
+	while True:
+		print("iteration:", i)
+		x += 1
+		print("x:", x)
+		if x == ((n + 1) / 2):
+			print(n, "is prime")
+			return None
+		else:
+			z = (x ** 2) - n
+			print("z:", z)
+		y = floor(sqrt(z))
+		print("y:", y)
+		print(y)
+		if y ** 2 == z:
+			print(n, "=", x + y, "*", x - y)
+			return x + y, x - y
+		i += 1
+# 6
+# 17878
+# 18178
+ferma(18178)
