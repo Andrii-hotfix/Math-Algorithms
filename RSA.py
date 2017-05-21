@@ -172,7 +172,6 @@ def rsaDecrypt(priv_d, n, enc_txt):
         char_l[i] = chr(int(item))
         i += 1
     return "".join(char_l)
-
 # print("generating keys pair")
 # private, public = rsaKeys()
 # print("done!")
