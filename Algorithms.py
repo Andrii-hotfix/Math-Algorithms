@@ -236,15 +236,9 @@ def lambda_matrix2(mod):
 		l_m.append(line)
 	return l_m
 
-<<<<<<< HEAD
+
 #Silver–Pohlig–Hellman algorithm which computes a discrete logarithms in a finite abelian group (g^x=y mod p)
 def SPH(g, y, p): #g is a generator, p is a prime number
-	
-=======
-#Silver–Pohlig–Hellman algorithm which computes a discrete logarithms in a finite abelian group (y=g^x mod p)
-def SPH(y, g, p): #g is a generator, p is a prime number
-
->>>>>>> 97cf85352fa283c64a723221527e20e52942837e
 	if is_prime(p):
 		mods = factorize(p-1)
 		only_diff_mods = set(mods)#some primes can repeat, we do not need them
@@ -253,52 +247,25 @@ def SPH(y, g, p): #g is a generator, p is a prime number
 		for prime in only_diff_mods:
 			r_list = [g**(int((p-1)*j/prime))%p for j in range(prime)]
 			x_list = []
-<<<<<<< HEAD
 			temp_y = y # we can not change y cause each time in loop it must have initial value
 			
 			for power in range(1, mods.count(prime)+1):
-				
-=======
-
-			if mods.count(prime)>1:
-				for power in range(1, mods.count(prime)+1):
-
-					for r_val in r_list:
-						if y**int(((p-1)/prime**power))%p == r_val:
-							x=r_list.index(r_val)
-							x_list.append(x*prime**(power-1))
-							break
-
-					y = (y*inversed_el(g**(prime**(power-1)*r_list.index(r_val)), p))%p
-			else:
->>>>>>> 97cf85352fa283c64a723221527e20e52942837e
 				for r_val in r_list:
 					if temp_y**int((p-1)/prime**power)%p == r_val:
 						x=r_list.index(r_val)
-<<<<<<< HEAD
 						x_list.append(x*prime**(power-1))
 						break
 						
 				temp_y = (temp_y*inversed_el(g**(prime**(power-1)*r_list.index(r_val)), p))%p
 							
-=======
-						x_list.append(x)
-						break
-
->>>>>>> 97cf85352fa283c64a723221527e20e52942837e
 			res = sum(x_list)%(prime**mods.count(prime))
 			sys_list.append([res, prime**mods.count(prime)])
 
 		return sys_of_linear_congrs(sys_list)
 	else:
 		print("Given module is not prime")
-<<<<<<< HEAD
-		
-# !notice that this function finds only the first (minimal) generator		
-=======
 
 # !notice that this function finds only the first (minimal) generator
->>>>>>> 97cf85352fa283c64a723221527e20e52942837e
 def generator(mod):
 	g=2
 	while g**int((mod-1)/2)%mod != mod-1:
@@ -448,4 +415,4 @@ def ferma(n):
 # 6
 # 17878
 # 18178
-ferma(18178)
+#ferma(18178)
