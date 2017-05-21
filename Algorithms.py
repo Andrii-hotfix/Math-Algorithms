@@ -233,8 +233,8 @@ def lambda_matrix2(mod):
 		l_m.append(line)
 	return l_m
 
-#Silver–Pohlig–Hellman algorithm which computes a discrete logarithms in a finite abelian group (y=g^x mod p)
-def SPH(y, g, p): #g is a generator, p is a prime number
+#Silver–Pohlig–Hellman algorithm which computes a discrete logarithms in a finite abelian group (g^x=y mod p)
+def SPH(g, y, p): #g is a generator, p is a prime number
 	
 	if is_prime(p):
 		mods = factorize(p-1)
@@ -244,31 +244,25 @@ def SPH(y, g, p): #g is a generator, p is a prime number
 		for prime in only_diff_mods:
 			r_list = [g**(int((p-1)*j/prime))%p for j in range(prime)]			
 			x_list = []
+			temp_y = y # we can not change y cause each time in loop it must have initial value
 			
-			if mods.count(prime)>1:
-				for power in range(1, mods.count(prime)+1):
-					
-					for r_val in r_list:
-						if y**int(((p-1)/prime**power))%p == r_val:
-							x=r_list.index(r_val)
-							x_list.append(x*prime**(power-1))
-							break
-							
-					y = (y*inversed_el(g**(prime**(power-1)*r_list.index(r_val)), p))%p
-			else:
-				for r_val in r_list:
-					if y**int(((p-1)/prime))%p == r_val:
-						x=r_list.index(r_val)
-						x_list.append(x)
-						break				
+			for power in range(1, mods.count(prime)+1):
 				
+				for r_val in r_list:
+					if temp_y**int((p-1)/prime**power)%p == r_val:
+						x=r_list.index(r_val)
+						x_list.append(x*prime**(power-1))
+						break
+						
+				temp_y = (temp_y*inversed_el(g**(prime**(power-1)*r_list.index(r_val)), p))%p
+							
 			res = sum(x_list)%(prime**mods.count(prime))
 			sys_list.append([res, prime**mods.count(prime)])
 			
 		return sys_of_linear_congrs(sys_list)
 	else:
 		print("Given module is not prime")
-			
+		
 # !notice that this function finds only the first (minimal) generator		
 def generator(mod):
 	g=2
