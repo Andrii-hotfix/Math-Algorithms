@@ -172,18 +172,17 @@ def rsaDecrypt(priv_d, n, enc_txt):
         char_l[i] = chr(int(item))
         i += 1
     return "".join(char_l)
-
-print("generating keys pair")
-private, public = rsaKeys()
-print("done!")
-print("private key is: ", private)
-print("public key is: ", public)
-text = ""
-while(True):
-    text = input("enter string to encrypt ")
-    if text == 'q':
-        break
-    encrypted = rsaEncrypt(public[0], public[1], text)
-    print("encrypted message: ", encrypted)
-    decrypted = rsaDecrypt(private[0], private[1], encrypted)
-    print("decrypted message: ", decrypted)
+# print("generating keys pair")
+# private, public = rsaKeys()
+# print("done!")
+# print("private key is: ", private)
+# print("public key is: ", public)
+# text = ""
+# while(True):
+#     text = input("enter string to encrypt ")
+#     if text == 'q':
+#         break
+#     encrypted = rsaEncrypt(public[0], public[1], text)
+#     print("encrypted message: ", encrypted)
+#     decrypted = rsaDecrypt(private[0], private[1], encrypted)
+#     print("decrypted message: ", decrypted)
