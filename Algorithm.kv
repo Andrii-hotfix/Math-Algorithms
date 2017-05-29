@@ -6,6 +6,7 @@ ScreenManagement:
 	PrimeChecker:
 	Factorization:
 	EulerFunction:
+	MebiusFunction:
 	SilverPohligHellman:
 
 <Button>:
@@ -15,6 +16,9 @@ ScreenManagement:
 	background_color:(105,105,105,0.4)
 	color: (0,0,0,1)
 
+<Label>:
+	color: (0,0,0,1)
+	
 <TextInput>:
 	font_size:0.5*self.height
 	
@@ -26,7 +30,7 @@ ScreenManagement:
 			Rectangle:
 				size: self.size
 				pos: self.pos
-				source: 'kai_greene.jpg'
+				source: 'tmb.jpg'
 		ScrollView:
 			size_hint: None, None
 			size: root.width, root.height
@@ -48,7 +52,7 @@ ScreenManagement:
 					on_release: app.root.current = "euler_function"
 				Button:
 					text: "Mebuis function"
-					#on_release: app.root.current = ""
+					on_release: app.root.current = "mebius_function"
 				Button:
 					text: "Generator checker"
 					#on_release: app.root.current = ""
@@ -87,11 +91,10 @@ ScreenManagement:
 <PrimeChecker>:
 	name: "prime_checker"
 	canvas.before:
-		Color:
-			rgba: 0,0,1,0.2
 		Rectangle:
 			size: self.size
 			pos: self.pos
+			source: 'paper.png'
 			
 	Button:
 		text: "Main Menu"
@@ -102,11 +105,10 @@ ScreenManagement:
 <Factorization>:
 	name:"factorization"
 	canvas.before:
-		Color:
-			rgba: 0,0,1,0.2
 		Rectangle:
 			size: self.size
 			pos: self.pos
+			source: 'paper.png'
 			
 	Button:
 		text: "Main Menu"
@@ -117,11 +119,24 @@ ScreenManagement:
 <EulerFunction>:
 	name: "euler_function"
 	canvas.before:
-		Color:
-			rgba: 0,0,1,0.2
 		Rectangle:
 			size: self.size
 			pos: self.pos
+			source: 'paper.png'
+			
+	Button:
+		text: "Main Menu"
+		size_hint: 0.2, 0.1
+		pos_hint: {"right":0.9, "top":0.15}
+		on_release: app.root.current = "main"
+
+<MebiusFunction>:
+	name:"mebius_function"
+	canvas.before:
+		Rectangle:
+			size: self.size
+			pos: self.pos
+			source: 'paper.png'
 			
 	Button:
 		text: "Main Menu"
@@ -132,15 +147,14 @@ ScreenManagement:
 <SilverPohligHellman>:
 	name:"silver_pohlig_hellman"
 	canvas.before:
-		Color:
-			rgba: 0,0,1,0.2
 		Rectangle:
 			size: self.size
 			pos: self.pos
-		
+			source: 'paper.png'
+
 	Button:
 		text: "Main Menu"
-		size_hint: 0.2, 0.06
+		size_hint: 0.2, 0.08
 		pos_hint: {"right":0.85, "top":0.8}
 		on_release: app.root.current = "main"
 		

@@ -148,7 +148,7 @@ def tonelli_shanks(a,p):
 			print("This congruency has no solution")
 	else:
 		print("Module must be a prime number")
-
+		
 #sys_list = [[a1, mod1], [a2, mod2], ...]
 # !!! each equation of system has to be represented as x = a (mod m), use solution for linear_congr if not
 def sys_of_linear_congrs(sys_list):
