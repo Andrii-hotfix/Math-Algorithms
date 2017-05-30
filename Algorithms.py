@@ -1,7 +1,9 @@
 from fractions import gcd, Fraction
 from math import floor, sqrt
-from collections import Counter
+from collections import Counter, OrderedDict
 import itertools
+import random
+import numpy
 
 #modular inversion
 def inversed_el(fig, mod):    #fig and mod can be not prime
@@ -414,7 +416,6 @@ def ferma(n):
 			print("z:", z)
 		y = floor(sqrt(z))
 		print("y:", y)
-		print(y)
 		if y ** 2 == z:
 			print(n, "=", x + y, "*", x - y)
 			return x + y, x - y
@@ -422,4 +423,67 @@ def ferma(n):
 # 6
 # 17878
 # 18178
-ferma(18178)
+# 
+# def dixon(n, k):
+# 	random.seed()
+# 	# chooses factor base
+# 	f_base = []
+# 	i = 0
+# 	number = 2
+# 	# finds k prime numbers
+# 	while i < k:
+# 		if is_prime(number):
+# 			f_base.append(number)
+# 			i += 1
+# 		number += 1
+# 	t = k + 1
+# 	print(f_base)
+# 	a = []
+# 	b = []
+# 	v = []
+# 	flag = True
+# 	# finds t numbers that can be factorized by f_base
+# 	for i in range(t):
+# 		while True:
+# 			a.append(random.randrange(n))
+# 			b.append((a[-1] ** 2) % n)
+# 			factor = factorize(b[-1])
+# 			if not all([item in f_base for item in factor]):
+# 				a = a[:-1]
+# 				b = b[:-1]
+# 			else:
+# 				break
+# 	print("a is:", a)
+# 	print("b is:", b)
+# 	# bilds v matrix
+# 	b = [Counter(factorize(item)) for item in b]
+# 	for item in b:
+# 		for key in f_base:
+# 			if not key in item.keys():
+# 				item[key] = 0
+# 		b[b.index(item)] = OrderedDict(sorted(item.items(), key = lambda t: t[0]))
+# 		v.append([value % 2 for value in item.values()])
+# 	v = numpy.matrix(v)
+# 	print("v is:")
+# 	print(v)
+# 	# finds c Є F2 such that c*v = 0
+# 	comb = list(itertools.product([1,0], repeat = t))
+# 	# erase zero-vector
+# 	comb = [item for item in comb if any([value != 0 for value in item])]
+# 	c = []
+# 	for item in comb:
+# 		res = [value % 2 for value in numpy.dot(item, v)]
+# 		if all([value == 0 for value in numpy.asarray(res)[0][0]]):
+# 			c = item
+# 			break
+# 	print("c is:", c)
+# 	l = []
+# 	i = 1
+# 	for item in c:
+# 		if item == 1:
+# 			l.append(i)
+# 		i += 1
+# 	print("l is:", l)
+# 	for item in l:
+
+dixon(143, 3)
