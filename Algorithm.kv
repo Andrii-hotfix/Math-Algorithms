@@ -6,6 +6,10 @@ ScreenManagement:
 	PrimeChecker:
 	Factorization:
 	EulerFunction:
+	MebiusFunction:
+	GeneratorChecker:
+	SearchGenerator:
+	SilverPohligHellman:
 
 <Button>:
 	size_hint_y: None
@@ -13,6 +17,13 @@ ScreenManagement:
 	font_size:0.35*self.height
 	background_color:(105,105,105,0.4)
 	color: (0,0,0,1)
+
+<Label>:
+	color: (0,0,0,1)
+	
+<TextInput>:
+	font_size:0.5*self.height
+	input_filter:"int"
 	
 <MainMenu>:
 	name: "main"
@@ -22,7 +33,7 @@ ScreenManagement:
 			Rectangle:
 				size: self.size
 				pos: self.pos
-				source: 'kai_greene.jpg'
+				source: 'tmb.jpg'
 		ScrollView:
 			size_hint: None, None
 			size: root.width, root.height
@@ -44,13 +55,13 @@ ScreenManagement:
 					on_release: app.root.current = "euler_function"
 				Button:
 					text: "Mebuis function"
-					#on_release: app.root.current = ""
+					on_release: app.root.current = "mebius_function"
 				Button:
 					text: "Generator checker"
-					#on_release: app.root.current = ""
+					on_release: app.root.current = "generator_checker"
 				Button:
 					text: "Search generator"
-					#on_release: app.root.current = ""
+					on_release: app.root.current = "search_generator"
 				Button:
 					text: "Modular inversion"
 					#on_release: app.root.current = ""
@@ -77,20 +88,19 @@ ScreenManagement:
 					#on_release: app.root.current = ""
 				Button:
 					text: "Silver-Pohlig-Hellman algorithm"
-					#on_release: app.root.current = ""
+					on_release: app.root.current = "silver_pohlig_hellman"
 		
 
 <PrimeChecker>:
 	name: "prime_checker"
 	canvas.before:
-		Color:
-			rgba: 0,0,1,0.2
 		Rectangle:
 			size: self.size
 			pos: self.pos
+			source: 'paper.png'
 			
 	Button:
-		text: "Back"
+		text: "Main Menu"
 		size_hint: 0.2, 0.1
 		pos_hint: {"right":0.9, "top":0.15}
 		on_release: app.root.current = "main"
@@ -98,14 +108,13 @@ ScreenManagement:
 <Factorization>:
 	name:"factorization"
 	canvas.before:
-		Color:
-			rgba: 0,0,1,0.2
 		Rectangle:
 			size: self.size
 			pos: self.pos
+			source: 'paper.png'
 			
 	Button:
-		text: "Back"
+		text: "Main Menu"
 		size_hint: 0.2, 0.1
 		pos_hint: {"right":0.9, "top":0.15}
 		on_release: app.root.current = "main"
@@ -113,19 +122,72 @@ ScreenManagement:
 <EulerFunction>:
 	name: "euler_function"
 	canvas.before:
-		Color:
-			rgba: 0,0,1,0.2
 		Rectangle:
 			size: self.size
 			pos: self.pos
+			source: 'paper.png'
 			
 	Button:
-		text: "Back"
+		text: "Main Menu"
+		size_hint: 0.2, 0.1
+		pos_hint: {"right":0.9, "top":0.15}
+		on_release: app.root.current = "main"
+
+<MebiusFunction>:
+	name:"mebius_function"
+	canvas.before:
+		Rectangle:
+			size: self.size
+			pos: self.pos
+			source: 'paper.png'
+			
+	Button:
+		text: "Main Menu"
 		size_hint: 0.2, 0.1
 		pos_hint: {"right":0.9, "top":0.15}
 		on_release: app.root.current = "main"
 		
+<GeneratorChecker>:
+	name:"generator_checker"
+	canvas.before:
+		Rectangle:
+			size: self.size
+			pos: self.pos
+			source: 'paper.png'
+			
+	Button:
+		text: "Main Menu"
+		size_hint: 0.2, 0.1
+		pos_hint: {"right":0.9, "top":0.15}
+		on_release: app.root.current = "main"
+
+<SearchGenerator>:
+	name:"search_generator"
+	canvas.before:
+		Rectangle:
+			size: self.size
+			pos: self.pos
+			source: 'paper.png'
+			
+	Button:
+		text: "Main Menu"
+		size_hint: 0.2, 0.1
+		pos_hint: {"right":0.9, "top":0.15}
+		on_release: app.root.current = "main"
 		
+<SilverPohligHellman>:
+	name:"silver_pohlig_hellman"
+	canvas.before:
+		Rectangle:
+			size: self.size
+			pos: self.pos
+			source: 'paper.png'
+
+	Button:
+		text: "Main Menu"
+		size_hint: 0.2, 0.08
+		pos_hint: {"right":0.85, "top":0.8}
+		on_release: app.root.current = "main"
 		
 		
 		

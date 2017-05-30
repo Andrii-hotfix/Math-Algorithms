@@ -94,7 +94,6 @@ def euler_func(num):
 		res = res*(1-Fraction(1, prime))
 	return res
 
-
 #Möbius function is a function which returns:
 #						0 if given number can be divided by number in second power
 #						1 if it can be divided by even amount of prides
@@ -238,10 +237,10 @@ def lambda_matrix2(mod):
 		l_m.append(line)
 	return l_m
 
-#Silver–Pohlig–Hellman algorithm which computes a discrete logarithms in a finite abelian group (y=g^x mod p)
-def SPH(y, g, p): #g is a generator, p is a prime number
 
-	if is_prime(p):
+#Silver–Pohlig–Hellman algorithm which computes a discrete logarithms in a finite abelian group (g^x=y mod p)
+def SPH(g, y, p): #g is a generator, p is a prime number
+	if is_prime(p) and is_generator(g):
 		mods = factorize(p-1)
 		only_diff_mods = set(mods)#some primes can repeat, we do not need them
 		sys_list = []
@@ -249,40 +248,52 @@ def SPH(y, g, p): #g is a generator, p is a prime number
 		for prime in only_diff_mods:
 			r_list = [g**(int((p-1)*j/prime))%p for j in range(prime)]
 			x_list = []
+			temp_y = y # we can not change y cause each time in loop it must have initial value
 
-			if mods.count(prime)>1:
-				for power in range(1, mods.count(prime)+1):
-
-					for r_val in r_list:
-						if y**int(((p-1)/prime**power))%p == r_val:
-							x=r_list.index(r_val)
-							x_list.append(x*prime**(power-1))
-							break
-
-					y = (y*inversed_el(g**(prime**(power-1)*r_list.index(r_val)), p))%p
-			else:
+			for power in range(1, mods.count(prime)+1):
 				for r_val in r_list:
-					if y**int(((p-1)/prime))%p == r_val:
+					if temp_y**int((p-1)/prime**power)%p == r_val:
 						x=r_list.index(r_val)
-						x_list.append(x)
+						x_list.append(x*prime**(power-1))
 						break
+
+				temp_y = (temp_y*inversed_el(g**(prime**(power-1)*r_list.index(r_val)), p))%p
 
 			res = sum(x_list)%(prime**mods.count(prime))
 			sys_list.append([res, prime**mods.count(prime)])
 
 		return sys_of_linear_congrs(sys_list)
 	else:
-		print("Given module is not prime")
+		print("Given module is not prime or g is not a generator")
 
 # !notice that this function finds only the first (minimal) generator
+# !generatos exist only for such modules: 2, 4, p^a, 2*p^a; where p is a prime
+# !if generator exists, then there are euler_func(euler_func(mod)) different generators in total
 def generator(mod):
 	g=2
-	while g**int((mod-1)/2)%mod != mod-1:
-		g+=1
-	return g
+	if mod == 2:
+		return 1
+	elif mod == 4:
+		return 3
+	elif len(factorize(mod))>1:
+		prime = factorize(mod)[1]
+		useful_gen = generator(prime)
+		t=0
+		while (useful_gen+prime*t)**(prime-1)%prime**2 == 1:
+			t+=1
+		return useful_gen+prime*t
+	else:
+		while g**int((mod-1)/2)%mod != mod-1:
+			g+=1
+		return g
 
+# !generatos exist only for such modules: 2, 4, p^a, 2*p^a; where p is a prime
 def is_generator(num, mod):
-	return num**int((mod-1)/2)%mod == mod-1
+	if len(factorize(mod))>1:
+		prime = factorize(mod)[1]
+		return num**(prime-1)%prime**2 != 1
+	else:
+		return num**int((mod-1)/2)%mod == mod-1
 
 # Morrison-Brilhard factorization of n
 def morr_br(n):
@@ -423,7 +434,7 @@ def ferma(n):
 # 6
 # 17878
 # 18178
-# 
+#
 # def dixon(n, k):
 # 	random.seed()
 # 	# chooses factor base
@@ -485,5 +496,3 @@ def ferma(n):
 # 		i += 1
 # 	print("l is:", l)
 # 	for item in l:
-
-dixon(143, 3)
