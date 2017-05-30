@@ -238,7 +238,7 @@ def lambda_matrix2(mod):
 
 #Silver–Pohlig–Hellman algorithm which computes a discrete logarithms in a finite abelian group (g^x=y mod p)
 def SPH(g, y, p): #g is a generator, p is a prime number
-	if is_prime(p):
+	if is_prime(p) and is_generator(g):
 		mods = factorize(p-1)
 		only_diff_mods = set(mods)#some primes can repeat, we do not need them
 		sys_list = []
@@ -262,7 +262,7 @@ def SPH(g, y, p): #g is a generator, p is a prime number
 
 		return sys_of_linear_congrs(sys_list)
 	else:
-		print("Given module is not prime")
+		print("Given module is not prime or g is not a generator")
 
 # !notice that this function finds only the first (minimal) generator
 # !generatos exist only for such modules: 2, 4, p^a, 2*p^a; where p is a prime
