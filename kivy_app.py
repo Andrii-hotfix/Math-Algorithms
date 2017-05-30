@@ -93,8 +93,8 @@ class EulerFunction(Screen):
 	def __init__(self, **kwargs):
 		super(EulerFunction, self).__init__(**kwargs)
 		
-		self.tip = Label(text="Euler function is a function which calculates the amount of mutually simple numbers with the given number", size_hint=(0.95, 0.1), 
-		pos_hint={"right":1, "top":1}, font_size=0.2*self.height, halign="left")
+		self.tip = Label(text="Euler function is a function which calculates the amount of mutually simple numbers with the given number", 
+		size_hint=(0.95, 0.1), pos_hint={"right":1, "top":1}, font_size=0.2*self.height, halign="left")
 		self.tip.bind(size=self.tip.setter("text_size"))
 		self.add_widget(self.tip)
 		
@@ -117,8 +117,12 @@ class MebiusFunction(Screen):
 	def __init__(self, **kwargs):
 		super(MebiusFunction, self).__init__(**kwargs)
 		
-		self.tip = Label(text="Möbius function is a function which returns:\n 0 if given number can be divided by number in second power \n 1 if it can be divided by even amount of prides\n -1 if it can be divided by odd amount of prides", 
-		size_hint=(0.95, 0.2), pos_hint={"right":1, "top":1}, halign="left")
+		self.tip_text = "Möbius function is a function which returns:\n \
+		0 if given number can be divided by number in second power \n \
+		1 if it can be divided by even amount of prides\n \
+		-1 if it can be divided by odd amount of prides"
+		
+		self.tip = Label(text=self.tip_text, size_hint=(0.95, 0.2), pos_hint={"right":1, "top":1}, halign="left")
 		self.tip.bind(size=self.tip.setter("text_size"))
 		self.add_widget(self.tip)
 		
@@ -140,12 +144,76 @@ class MebiusFunction(Screen):
 class GeneratorChecker(Screen):
 	def __init__(self, **kwargs):
 		super(GeneratorChecker, self).__init__(**kwargs)
+		
+		self.tip = Label(text="This function checks if given number is a generator for module m", size_hint=(0.85, 0.1), 
+		pos_hint={"right":0.9,"top":1}, font_size=0.2*self.height, halign="left", valign="middle")
+		self.tip.bind(size=self.tip.setter("text_size"))
+		self.add_widget(self.tip)
+		
+		self.protip = Label(text="*Notice that generatos exist only for such modules: 2, 4, p^a, 2*p^a; where p is a prime", 
+		size_hint=(0.85, 0.1), pos_hint={"right":0.9,"top":0.85}, font_size=0.2*self.height, halign="left", valign="middle")
+		self.protip.bind(size=self.protip.setter("text_size"))
+		self.add_widget(self.protip)
+		
+		self.tip1 = Label(text="Input number:", size_hint=(0.25, 0.1), pos_hint={"right":0.3,"top":0.7})
+		self.add_widget(self.tip1)
+		
+		self.data1 = TextInput(multiline=False, size_hint=(0.2, 0.05), pos_hint={"right":0.5, "top":0.68})
+		self.add_widget(self.data1)
+		
+		self.tip2 = Label(text="Input module:", size_hint=(0.25, 0.1), pos_hint={"right":0.3,"top":0.6})
+		self.add_widget(self.tip2)
+		
+		self.data2 = TextInput(multiline=False, size_hint=(0.2, 0.05), pos_hint={"right":0.5, "top":0.58})
+		self.add_widget(self.data2)
+		
+		self.btn = Button(text="Check!", size_hint=(0.1, 0.1), pos_hint={"right":0.9, "top":0.6})
+		self.btn.bind(on_press = self.action)
+		self.add_widget(self.btn)
+		
+		self.answ = Label(text="", size_hint=(0.2, 0.1), pos_hint={"right":0.3, "top":0.5}, font_size=0.2*self.height)
+		self.add_widget(self.answ)
+		
+	def action(self, btn):
+		answer = is_generator(int(self.data1.text), int(self.data2.text))
+		self.answ.text = "Answer: "+str(answer)
 
 		
 class SearchGenerator(Screen):
 	def __init__(self, **kwargs):
 		super(SearchGenerator, self).__init__(**kwargs)
-
+		
+		self.tip = Label(text="This function finds the first (minimal) generator (g^(q-1)/2=-1 mod q)", 
+		size_hint=(0.85, 0.1), pos_hint={"right":0.9,"top":1}, font_size=0.2*self.height, halign="left", valign="middle")
+		self.tip.bind(size=self.tip.setter("text_size"))
+		self.add_widget(self.tip)
+		
+		self.protip = Label(text="*Notice that generatos exist only for such modules: 2, 4, p^a, 2*p^a; where p is a prime", 
+		size_hint=(0.85, 0.1), pos_hint={"right":0.9,"top":0.85}, font_size=0.2*self.height, halign="left", valign="middle")
+		self.protip.bind(size=self.protip.setter("text_size"))
+		self.add_widget(self.protip)
+		
+		self.tip1 = Label(text="Input module value:", pos_hint={"right":0.3, "top":0.7}, size_hint=(0.3, 0.1))
+		self.add_widget(self.tip1)
+		
+		self.data = TextInput(multiline=False, size_hint=(0.2, 0.05), pos_hint={"right":0.5, "top":0.68})
+		self.add_widget(self.data)
+		
+		self.btn = Button(text="Search!", size_hint=(0.1, 0.1), pos_hint={"right":0.7, "top":0.7})
+		self.btn.bind(on_press = self.action)
+		self.add_widget(self.btn)
+		
+		self.answ = Label(text="", size_hint=(0.2, 0.1), pos_hint={"right":0.3, "top":0.6}, font_size=0.2*self.height)
+		self.add_widget(self.answ)
+		
+	def action(self, btn):
+		answer = generator(int(self.data.text))
+		self.answ.text = "First generator: "+str(answer)
+		
+		self.proansw = Label(text="It might be useful for you to know that there are {} different generators for this module".format(euler_func(euler_func(int(self.data.text)))), 
+		size_hint=(0.85, 0.1), pos_hint={"right":0.9,"top":0.4}, halign="left")
+		self.proansw.bind(size=self.proansw.setter("text_size"))
+		self.add_widget(self.proansw)
 		
 class ModularInversion(Screen):
 	def __init__(self, **kwargs):
@@ -182,7 +250,7 @@ class SilverPohligHellman(Screen):
 		super(SilverPohligHellman, self).__init__(**kwargs)
 
 		
-		self.tip = Label(text="Silver–Pohlig–Hellman algorithm which computes a discrete logarithms in a finite abelian group (g^x=y mod p)", 
+		self.tip = Label(text="Silver–Pohlig–Hellman algorithm which computes a discrete logarithms in a finite abelian group (g^x=y mod q)", 
 		pos_hint={"right":0.85, "top":1}, size_hint=(0.8,0.1), halign="left", valign="middle")
 		self.tip.bind(size=self.tip.setter("text_size"))
 		self.add_widget(self.tip)
@@ -252,7 +320,8 @@ class SilverPohligHellman(Screen):
 			x_list=[]
 			for power in range(0, factorization.count(pr)):
 				x_list.append(str(pr**(power))+"x[{}]".format(power))
-			linear_congr=Label(text="x = " + "+".join(x_list) + " mod{}".format(pr**factorization.count(pr)), height=20, size_hint_y=None, halign="left")
+			linear_congr=Label(text="x = " + "+".join(x_list) + " mod{}".format(pr**factorization.count(pr)), 
+			height=20, size_hint_y=None, halign="left")
 			linear_congr.bind(size=linear_congr.setter("text_size"))
 			self.grid_layout.add_widget(linear_congr)
 		

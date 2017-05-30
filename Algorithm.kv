@@ -7,6 +7,8 @@ ScreenManagement:
 	Factorization:
 	EulerFunction:
 	MebiusFunction:
+	GeneratorChecker:
+	SearchGenerator:
 	SilverPohligHellman:
 
 <Button>:
@@ -21,6 +23,7 @@ ScreenManagement:
 	
 <TextInput>:
 	font_size:0.5*self.height
+	input_filter:"int"
 	
 <MainMenu>:
 	name: "main"
@@ -55,10 +58,10 @@ ScreenManagement:
 					on_release: app.root.current = "mebius_function"
 				Button:
 					text: "Generator checker"
-					#on_release: app.root.current = ""
+					on_release: app.root.current = "generator_checker"
 				Button:
 					text: "Search generator"
-					#on_release: app.root.current = ""
+					on_release: app.root.current = "search_generator"
 				Button:
 					text: "Modular inversion"
 					#on_release: app.root.current = ""
@@ -132,6 +135,34 @@ ScreenManagement:
 
 <MebiusFunction>:
 	name:"mebius_function"
+	canvas.before:
+		Rectangle:
+			size: self.size
+			pos: self.pos
+			source: 'paper.png'
+			
+	Button:
+		text: "Main Menu"
+		size_hint: 0.2, 0.1
+		pos_hint: {"right":0.9, "top":0.15}
+		on_release: app.root.current = "main"
+		
+<GeneratorChecker>:
+	name:"generator_checker"
+	canvas.before:
+		Rectangle:
+			size: self.size
+			pos: self.pos
+			source: 'paper.png'
+			
+	Button:
+		text: "Main Menu"
+		size_hint: 0.2, 0.1
+		pos_hint: {"right":0.9, "top":0.15}
+		on_release: app.root.current = "main"
+
+<SearchGenerator>:
+	name:"search_generator"
 	canvas.before:
 		Rectangle:
 			size: self.size

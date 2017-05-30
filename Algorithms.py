@@ -89,9 +89,8 @@ def euler_func(num):
 	primes = set(factor)  #for this function we need only different primes, so throw away the ones which repeat
 	res = num
 	for prime in primes:
-		res = res*(1-Fraction(1, prime))
+		res = res*(1-Fraction(1, prime))		
 	return res
-
 
 #Möbius function is a function which returns:
 #						0 if given number can be divided by number in second power
@@ -266,14 +265,33 @@ def SPH(g, y, p): #g is a generator, p is a prime number
 		print("Given module is not prime")
 
 # !notice that this function finds only the first (minimal) generator
+# !generatos exist only for such modules: 2, 4, p^a, 2*p^a; where p is a prime
+# !if generator exists, then there are euler_func(euler_func(mod)) different generators in total
 def generator(mod):
 	g=2
-	while g**int((mod-1)/2)%mod != mod-1:
-		g+=1
-	return g
+	if mod == 2:
+		return 1
+	elif mod == 4:
+		return 3
+	elif len(factorize(mod))>1:
+		prime = factorize(mod)[1]
+		useful_gen = generator(prime)
+		t=0
+		while (useful_gen+prime*t)**(prime-1)%prime**2 == 1:
+			t+=1
+		return useful_gen+prime*t	
+	else:
+		while g**int((mod-1)/2)%mod != mod-1:
+			g+=1
+		return g
 
+# !generatos exist only for such modules: 2, 4, p^a, 2*p^a; where p is a prime		
 def is_generator(num, mod):
-	return num**int((mod-1)/2)%mod == mod-1
+	if len(factorize(mod))>1:
+		prime = factorize(mod)[1]
+		return num**(prime-1)%prime**2 != 1
+	else:
+		return num**int((mod-1)/2)%mod == mod-1
 
 # Morrison-Brilhard factorization of n
 def morr_br(n):
